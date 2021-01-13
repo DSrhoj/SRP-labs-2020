@@ -62,17 +62,31 @@ const MedicalTest_5 = subject("MedicalTest", {
 // * =============================
 // *  Roles <--> permissions
 // * -----------------------------
-function defineAdminRules({ can }, user) {}
-function defineDoctorRules({ can }, user) {}
-function defineUserRules({ can }, user) {}
-function defineAnonymousRules({ can }, user) {}
+function defineAdminRules({ can }, user) {
+  can("manage", "all");
+}
+function defineDoctorRules({ can }, user) { }
+function defineUserRules({ can }, user) {
+  can(
+    ["create", "read", "update", "delete]"],
+    "User",
+    ["username", "password"],
+    { id: user.id }
+  );
+  can(
+    ["create", "read", "update", "delete]"],
+    "MedicalTest",
+    { UserId: user.id }
+  );
+}
+function defineAnonymousRules({ can }, user) { }
 
 // * =============================
 // *  CASL rules for user
 // * -----------------------------
-function defineRulesFor(user) {}
+function defineRulesFor(user) { }
 
 // * =============================
 // *  CASL abilities for user
 // * -----------------------------
-function defineAbilityFor(user) {}
+function defineAbilityFor(user) { }
